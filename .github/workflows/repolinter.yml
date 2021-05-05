@@ -15,6 +15,9 @@ jobs:
       - name: 'Checkout repo'
         # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
       
       - name: 'Check against Repolinter'
         uses: newrelic/repolinter-action@v1
