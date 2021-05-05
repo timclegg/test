@@ -15,14 +15,17 @@ jobs:
       - name: 'Checkout repo'
         # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
+        # with:
+        #   ref: ${{ github.event.pull_request.head.sha }}
+      - name: "List directory"
+        run: echo $(ls $GITHUB_WORKSPACE)
       
-      - name: 'Check against Repolinter'
-        uses: newrelic/repolinter-action@v1
-        with:
-          config_file: 'repolinter.json'
+      # - name: 'Check against Repolinter'
+      #   uses: newrelic/repolinter-action@v1
+      #   with:
+      #     config_file: 'repolinter.json'
+
+
           # config_url: https://raw.githubusercontent.com/aperture-science-incorporated/.github/master/repolinter-newrelic-communityplus.json
       
       # # Runs a single command using the runners shell
