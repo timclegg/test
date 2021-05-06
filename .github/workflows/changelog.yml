@@ -1,4 +1,4 @@
-name: Post-Pull Request Pipeline
+name: Changelog-generator
 on:
   pull_request:
     types: [closed]

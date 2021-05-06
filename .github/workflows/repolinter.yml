@@ -1,4 +1,4 @@
-name: Pre-Pull Request
+name: Repolinter
 on:
   pull_request:
     branches: [ "**/*" ]
