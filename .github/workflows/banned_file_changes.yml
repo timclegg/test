@@ -8,9 +8,11 @@ jobs:
     name: Look for unsupported (banned) file modifications on PRs
     runs-on: ubuntu-latest
     steps:
-      - name: Get file changes
+      - name: Get all file changes
         id: files
         uses: jitterbit/get-changed-files@v1
       - name: Look for banned files
         if: contains(steps.files.outputs.all, '.github')
-        run: exit 1
+        run: |
+          echo 'Changes to files in .github are not allowed.'
+          exit 1
