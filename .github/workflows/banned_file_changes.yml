@@ -12,5 +12,5 @@ jobs:
         id: files
         uses: jitterbit/get-changed-files@v1
       - name: Look for banned files
-        if: contains(steps.files.outputs.all, ".github")
+        if: contains(steps.files.outputs.all, '.github')
         run: exit 1
