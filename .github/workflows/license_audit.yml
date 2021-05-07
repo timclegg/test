@@ -1,0 +1,31 @@
+name: Audit licenses
+on:
+  pull_request:
+    branches: [ "**/*" ]
+
+jobs:
+  run_scancode_toolkit:
+    name: Get inventory of licenses used in project
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repo'
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+      - name: Run Scancode-toolkit
+        container:
+          image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
+          volumes:
+            - $GITHUB_WORKSPACE:/project
+        run: |
+          scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
+      - name: Commit updated licenses.json
+        run: |
+          git add licenses.json
+      - name: Commit & push licenses.json
+        uses: actions-js/push@v1.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'main'
+          message: 'Updating licenses.json'

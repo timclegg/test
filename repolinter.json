@@ -47,7 +47,7 @@
           },
           "lineCount": 1,
           "patterns": [
-            "^Copyright \\(c\\) [12][90]\\d\\d Oracle and/or its affiliates\\."
+            "Copyright \\(c\\) [12][90]\\d\\d Oracle and/or its affiliates\\."
           ],
           "succeed-on-non-exist": true
         }
