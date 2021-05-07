@@ -14,12 +14,13 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
       - name: Run Scancode-toolkit
-        container:
-          image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
-          volumes:
-            - $GITHUB_WORKSPACE:/project
-        run: |
-          scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
+        uses: addnab/docker-run-action@v3
+        with:
+          registry: ghcr.io/oracledevrel
+          image: scancode-toolkit:v21.3.31
+          options: --mount type=bind,source="$(pwd)",target=/project scancode-toolkit:v21.3.31 -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
+          run: |
+            scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
       - name: Commit updated licenses.json
         run: |
           git add licenses.json
