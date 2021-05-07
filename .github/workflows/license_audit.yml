@@ -10,7 +10,7 @@ jobs:
     container:
       image: docker@ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
       volumes:
-        - ${{ $GITHUB_WORKSPACE }}:/project
+        - $GITHUB_WORKSPACE:/project
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
