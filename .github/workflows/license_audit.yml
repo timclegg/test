@@ -10,8 +10,8 @@ jobs:
     container:
       image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
       credentials:
-        username: ${{ github.actor }}
-        password: ${{ GITHUB_TOKEN }}
+        username: $GITHUB_ACTOR
+        password: $GITHUB_TOKEN
       volumes:
         - $GITHUB_WORKSPACE:/project
     steps:
