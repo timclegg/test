@@ -18,7 +18,7 @@ jobs:
         with:
           registry: ghcr.io/oracledevrel
           image: scancode-toolkit:v21.3.31
-          options: --mount type=bind,source=$GITHUB_WORKSPACE,target=/project scancode-toolkit:v21.3.31 -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
+          options: --mount type=bind,source=$(echo $GITHUB_WORKSPACE),target=/project scancode-toolkit:v21.3.31 -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
           run: |
             scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project
       - name: Commit updated licenses.json
