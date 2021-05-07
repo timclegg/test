@@ -8,7 +8,7 @@ jobs:
     name: Get inventory of licenses used in project
     runs-on: ubuntu-latest
     container:
-      image: docker@ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
+      image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
       volumes:
         - $GITHUB_WORKSPACE:/project
     steps:
