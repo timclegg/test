@@ -32,9 +32,12 @@ jobs:
         #   run: |
         #     scancode -clpeui --ignore licenses.json --json-pp /github/workspace/licenses.json /github/workspace/
         # run: scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project/
-        run: scancode -clpeui --ignore licenses.json --ignore license_policy.yml --json-pp /__w/test/test/licenses.json /__w/test/test/
+        run: |
+          scancode -clpeui --ignore licenses.json --ignore license_policy.yml --json-pp /__w/test/test/licenses.json /__w/test/test/
+          echo licenses.json
       - name: Look for non-approved licenses
         run: |
+          echo grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | wc -l
           if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | wc -l > 0 ))
           then
             echo "ERROR: At least one non-approved license found."
