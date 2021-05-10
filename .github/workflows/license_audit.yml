@@ -33,7 +33,7 @@ jobs:
         #     scancode -clpeui --ignore licenses.json --json-pp /github/workspace/licenses.json /github/workspace/
         # run: scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project/
         run: |
-          scancode -clpeui --ignore licenses.json --ignore license_policy.yml --json-pp /__w/test/test/licenses.json /__w/test/test/
+          scancode -l --ignore licenses.json --ignore license_policy.yml --license-policy /project/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
         run: |
