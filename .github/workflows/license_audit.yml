@@ -14,7 +14,7 @@ jobs:
       #   username: ${{ github.actor }}
       #   password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
-        - $GITHUB_WORKSPACE:/project
+        - ${{ $GITHUB_WORKSPACE }} :/project
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
