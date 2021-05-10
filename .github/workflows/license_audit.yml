@@ -15,6 +15,8 @@ jobs:
       #   password: ${{ secrets.GITHUB_TOKEN }}
       # volumes:
       #   - $GITHUB_WORKSPACE:/project
+      volumes:
+        - /__w/test/test:/project
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
@@ -30,7 +32,7 @@ jobs:
         #   run: |
         #     scancode -clpeui --ignore licenses.json --json-pp /github/workspace/licenses.json /github/workspace/
         # run: scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project/
-        run: scancode -clpeui --ignore licenses.json --json-pp /github/workspace/licenses.json /github/workspace/
+        run: scancode -clpeui --ignore licenses.json --json-pp /__w/test/test/licenses.json /__w/test/test/
       - name: Commit updated licenses.json
         run: |
           git add licenses.json
