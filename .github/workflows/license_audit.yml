@@ -20,9 +20,9 @@ jobs:
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+        # with:
+        #   persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        #   fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
       - name: Run Scancode-toolkit
         # uses: addnab/docker-run-action@v3
         # with:
@@ -32,13 +32,23 @@ jobs:
         #   run: |
         #     scancode -clpeui --ignore licenses.json --json-pp /github/workspace/licenses.json /github/workspace/
         # run: scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project/
-        run: scancode -clpeui --ignore licenses.json --json-pp /__w/test/test/licenses.json /__w/test/test/
-      - name: Commit updated licenses.json
+        run: scancode -clpeui --ignore licenses.json --ignore license_policy.yml --json-pp /__w/test/test/licenses.json /__w/test/test/
+      - name: Look for non-approved licenses
         run: |
-          git add licenses.json
-      - name: Commit & push licenses.json
-        uses: actions-js/push@v1.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: 'main'
-          message: 'Updating licenses.json'
+          if (( grep -siHE '^[[:space:]]+"license_policy": {},$' licenses.json | wc -l > 0 ))
+          then
+            echo "ERROR: At least one non-approved license found."
+            exit 1
+          else
+            echo "All identified licenses are approved."
+            exit 0
+          fi
+      # - name: Commit updated licenses.json
+      #   run: |
+      #     git add licenses.json
+      # - name: Commit & push licenses.json
+      #   uses: actions-js/push@v1.2
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: 'main'
+      #     message: 'Updating licenses.json'
