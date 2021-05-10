@@ -1,4 +1,4 @@
-name: Banned file changes
+name: Banned file changes (push)
 on:
   push:
     branches: [ "**/*" ]

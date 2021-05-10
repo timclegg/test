@@ -1,4 +1,4 @@
-name: Banned file changes
+name: Banned file changes (PR)
 on:
   pull_request:
     branches: [ "**/*" ]

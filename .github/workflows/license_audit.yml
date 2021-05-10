@@ -35,7 +35,7 @@ jobs:
         run: scancode -clpeui --ignore licenses.json --ignore license_policy.yml --json-pp /__w/test/test/licenses.json /__w/test/test/
       - name: Look for non-approved licenses
         run: |
-          if (( grep -siHE '^[[:space:]]+"license_policy": {},$' licenses.json | wc -l > 0 ))
+          if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | wc -l > 0 ))
           then
             echo "ERROR: At least one non-approved license found."
             exit 1
