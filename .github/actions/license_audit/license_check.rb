@@ -2,21 +2,18 @@ require 'json'
 
 file_name = 'licenses.json'
 
-puts "Hello world!"
-puts "ENV: #{ENV['INPUT_LICENSES_FILE']}"
-puts "ARGV: #{ARGV[0]}"
-# if ARGV.length > 0
-#   file_name = ARGV[0]
-# end
+if ARGV.length > 0
+  file_name = ARGV[0]
+end
 
-# if ENV.include?('INPUT_LICENSES_FILE') && ENV['INPUT_LICENSES_FILE'].to_s.length > 0
-#   file_name = ENV['INPUT_LICENSES_FILE']
-# end
+if ENV.include?('INPUT_LICENSES_FILE') && ENV['INPUT_LICENSES_FILE'].to_s.length > 0
+  file_name = ENV['INPUT_LICENSES_FILE']
+end
 
-# if !File.exist?(file_name)
-#   puts "ERROR - invalid (missing) file name given: #{file_name}"
-#   exit!
-# end
+if !File.exist?(file_name)
+  puts "ERROR - invalid (missing) file name given: #{file_name}"
+  exit!
+end
 
 # file_data = ''
 # open(file_name) do |f|

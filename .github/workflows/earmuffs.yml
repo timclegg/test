@@ -6,7 +6,10 @@ on:
 
 jobs:
   scan:
-    - name: Run Earmuffs
-      uses: dannyhinshaw/earmuffs@master
-      with:
-        exclude_files: "\\.github\\|\\.git"
+    name: Run Earmuffs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look for bad stuff
+        uses: dannyhinshaw/earmuffs@master
+        with:
+          exclude_files: "\\.github\\|\\.git"
