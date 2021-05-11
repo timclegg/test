@@ -15,28 +15,33 @@ if !File.exist?(file_name)
   exit!
 end
 
-# file_data = ''
-# open(file_name) do |f|
-#   file_data += f.read
-# end
+file_data = ''
+open(file_name) do |f|
+  file_data += f.read
+end
 
-# json_data = JSON.parse(file_data)
+if file_data.length <= 0
+  puts "ERROR - no data read (0 byte JSON file)."
+  exit
+end
 
-# unapproved_licenses = {}
+json_data = JSON.parse(file_data)
 
-# json_data['files'].each do |f|
-#   if f['license_policy'].count <= 0
-#     f['licenses'].each do |l|
-#       if !unapproved_licenses.include?(l['key'])
-#         unapproved_licenses[l['key']] = []
-#       end
+unapproved_licenses = {}
+
+json_data['files'].each do |f|
+  if f['license_policy'].count <= 0
+    f['licenses'].each do |l|
+      if !unapproved_licenses.include?(l['key'])
+        unapproved_licenses[l['key']] = []
+      end
       
-#       if !unapproved_licenses[l['key']].include?(f['path'])
-#         unapproved_licenses[l['key']] << f['path']
-#       end
-#     end
-#   end
-# end
+      if !unapproved_licenses[l['key']].include?(f['path'])
+        unapproved_licenses[l['key']] << f['path']
+      end
+    end
+  end
+end
 
 # if unapproved_licenses.count > 0
 #   puts "ERROR - found some licenses that require further inspection:\n#{unapproved_licenses}"
