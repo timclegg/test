@@ -39,7 +39,7 @@ jobs:
       - name: Look for non-approved licenses
         run: |
           echo grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | wc -l
-          echo grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json
+          echo $(grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json)
           if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | wc -l > 0 ))
           then
             echo "ERROR: At least one non-approved license found."
