@@ -6,6 +6,10 @@ if ARGV.length > 0
   file_name = ARGV[0]
 end
 
+if ENV.include?('INPUT_LICENSES_FILE') && ENV['INPUT_LICENSES_FILE'].to_s.length > 0
+  file_name = ENV['INPUT_LICENSES_FILE']
+end
+
 if !File.exist?(file_name)
   puts "ERROR - invalid (missing) file name given: #{file_name}"
   exit!
