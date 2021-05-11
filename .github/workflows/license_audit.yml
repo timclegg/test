@@ -38,14 +38,10 @@ jobs:
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
         run: |
-          echo "Here's the matches:"
-          echo $(grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*')
-          echo "Here's the count:"
-          echo grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*' | wc -l
-          
-          if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*' | wc -l > 0 ))
+          if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*' | wc -l > 1 ))
           then
-            echo "ERROR: At least one non-approved license found."
+            echo "ERROR: At least one non-approved license found.  Here are the matches:"
+            echo $(grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json)
             exit 1
           else
             echo "All identified licenses are approved."
