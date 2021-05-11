@@ -1,0 +1,12 @@
+name: Repolinter
+on:
+  pull_request:
+    branches: [ "**/*" ]
+  push:
+
+jobs:
+  scan:
+    - name: Run Earmuffs
+      uses: dannyhinshaw/earmuffs@master
+      with:
+        exclude_files: "\\.github\\|\\.git"

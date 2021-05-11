@@ -16,9 +16,18 @@ jobs:
         uses: newrelic/repolinter-action@v1
         with:
           config_file: 'repolinter.json'
+          output_type: issue
+          # username: my-token-username
+          # token: ${{ secrets.MY_TOKEN }}
       
-      - name: 'Output'
-        run: |
-          echo "${{ steps.repolinter.outputs.passed }}"
-          echo "${{ steps.repolinter.outputs.errored }}"
-          echo "${{ steps.repolinter.outputs.json_output }}"
+      - name: 'Check against Repolinter'
+        id: repolinter
+        uses: newrelic/repolinter-action@v1
+        with:
+          config_file: 'repolinter.json'
+      
+      # - name: 'Output'
+      #   run: |
+      #     echo "${{ steps.repolinter.outputs.passed }}"
+      #     echo "${{ steps.repolinter.outputs.errored }}"
+      #     echo "${{ steps.repolinter.outputs.json_output }}"

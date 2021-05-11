@@ -37,16 +37,22 @@ jobs:
           echo "\n\nHere are the licenses found:\n"
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
-        run: |
-          if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*' | wc -l > 1 ))
-          then
-            echo "ERROR: At least one non-approved license found.  Here are the matches:"
-            echo $(grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json)
-            exit 1
-          else
-            echo "All identified licenses are approved."
-            exit 0
-          fi
+        # run: |
+        #   if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*' | wc -l > 1 ))
+        #   then
+        #     echo "ERROR: At least one non-approved license found.  Here are the matches:"
+        #     echo $(grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json)
+        #     exit 1
+        #   else
+        #     echo "All identified licenses are approved."
+        #     exit 0
+        #   fi
+        uses: ./.github/actions/license_audit
+        id: analysis
+        with:
+          licenses_file: 'licenses.json'
+      - name: Analysis results
+        run: echo "${{ steps.analysis.outputs.unapproved_licenses}}"
       # - name: Commit updated licenses.json
       #   run: |
       #     git add licenses.json
