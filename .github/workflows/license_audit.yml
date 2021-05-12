@@ -13,8 +13,8 @@ jobs:
       # credentials:
       #   username: ${{ github.actor }}
       #   password: ${{ secrets.GITHUB_TOKEN }}
-      # volumes:
-      #   - $GITHUB_WORKSPACE:/project
+      volumes:
+        - '${{ $GITHUB_WORKSPACE }}':'/github/workspace'
       volumes:
         - /__w/test/test:/project
     steps:
