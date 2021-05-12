@@ -16,6 +16,7 @@ jobs:
       volumes:
         # - ${{ $GITHUB_WORKSPACE }}:/github/workspace
         - /__w/test/test:/project
+        - /__w/test/test:/github/workspace
       # volumes:
       #   - /__w/test/test:/project
     steps:
