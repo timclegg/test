@@ -42,7 +42,10 @@ jobs:
         # scancode -l --ignore licenses.json --ignore .github/**/* --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         # cd /__w/test/test/
         run: |
-          scancode -l --ignore licenses.json --ignore .github/**/* --ignore license_policy.yml --license-policy license_policy.yml --only-findings --summary --json-pp licenses.json .
+          echo "$(pwd)"
+          echo "$(ls -lah)"
+          cd /github/workspace
+          scancode -l --ignore licenses.json --ignore .github/**/* --ignore license_policy.yml --license-policy /github/workspace/license_policy.yml --only-findings --summary --json-pp /github/workspace/licenses.json /github/workspace
           echo "\n\nHere is the licenses.json:\n"
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
