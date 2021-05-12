@@ -1,7 +1,8 @@
 name: Audit licenses
 on:
-  pull_request:
-    branches: [ "**/*" ]
+  # pull_request:
+  #   branches: [ "**/*" ]
+  pull_request_target:
 
 jobs:
   run_scancode_toolkit:
@@ -21,6 +22,9 @@ jobs:
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
         # with:
         #   persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         #   fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
@@ -37,36 +41,15 @@ jobs:
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /github/workspace/license_policy.yml --only-findings --summary --json-pp /github/workspace/licenses.json /github/workspace
         # scancode -l --ignore licenses.json --ignore .github/**/* --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         run: |
-          echo "v0.9"
-          echo "$(pwd)"
-          echo "$(ls -lah)"
           cd /__w/test/test/
           scancode -l --ignore licenses.json --ignore .github/**/* --ignore license_policy.yml --license-policy license_policy.yml --only-findings --summary --json-pp licenses.json .
-          echo "\n\nHere is the licenses.json found:\n"
+          echo "\n\nHere is the licenses.json:\n"
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
-        # run: |
-        #   if (( grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json | grep -siHE '^[^[:blank:]].*' | wc -l > 1 ))
-        #   then
-        #     echo "ERROR: At least one non-approved license found.  Here are the matches:"
-        #     echo $(grep -siHE '^[[:space:]]+"license_policy": \{\},$' licenses.json)
-        #     exit 1
-        #   else
-        #     echo "All identified licenses are approved."
-        #     exit 0
-        #   fi
         uses: ./.github/actions/license_audit
         id: analysis
         with:
           licenses_file: '/github/workspace/licenses.json'
       - name: Analysis results
         run: echo "${{ steps.analysis.outputs.unapproved_licenses}}"
-      # - name: Commit updated licenses.json
-      #   run: |
-      #     git add licenses.json
-      # - name: Commit & push licenses.json
-      #   uses: actions-js/push@v1.2
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: 'main'
-      #     message: 'Updating licenses.json'
+        

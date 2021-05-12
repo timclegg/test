@@ -1,8 +1,5 @@
 require 'json'
 
-puts `pwd`
-puts `ls -lah`
-
 file_name = 'licenses.json'
 
 if ARGV.length > 0
@@ -15,7 +12,7 @@ end
 
 if !File.exist?(file_name)
   puts "ERROR - invalid (missing) file name given: #{file_name}"
-  exit!
+  exit(1)
 end
 
 file_data = ''
@@ -24,8 +21,9 @@ open(file_name) do |f|
 end
 
 if file_data.length <= 0
-  puts "ERROR - no data read (0 byte JSON file)."
-  exit
+  puts "WARNING - no data read (0 byte JSON file)."
+  puts "::set-output name=unapproved_licenses::false"
+  exit(0)
 end
 
 json_data = JSON.parse(file_data)
