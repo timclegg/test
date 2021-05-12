@@ -5,7 +5,7 @@ on:
   
 jobs:
   check_for_banned_file_changes:
-    if: contains(secrets.REPO_ADMINS, github.actor) == false
+    if: contains('snafuz timclegg', github.actor) == false
     name: Look for unsupported (banned) file modifications on PRs
     runs-on: ubuntu-latest
     steps:
