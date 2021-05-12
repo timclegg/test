@@ -66,4 +66,6 @@ jobs:
             **License Inspection**
             Requires manual inspection.  There are some licenses which dictate further analysis and review.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Halt pipeline on unapproved licenses
+        if: steps.analysis.outputs.unapproved_licenses == "true"
         run: exit 1
