@@ -11,9 +11,9 @@ jobs:
     container:
       # image: txl8578/scancode-toolkit
       image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
-      credentials:
-        # username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      # credentials:
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.GITHUB_TOKEN }}
       # volumes:
         # - ${{ $GITHUB_WORKSPACE }}:/github/workspace
         # - /__w/test/test:/project
