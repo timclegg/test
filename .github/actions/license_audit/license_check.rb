@@ -1,5 +1,8 @@
 require 'json'
 
+puts `pwd`
+puts `ls -lah`
+
 file_name = 'licenses.json'
 
 if ARGV.length > 0
