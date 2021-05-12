@@ -11,8 +11,18 @@ jobs:
       - name: Get all file changes
         id: files
         uses: jitterbit/get-changed-files@v1
-      - name: Look for banned files
+      - name: Look for changes in .github
         if: contains(steps.files.outputs.all, '.github')
         run: |
           echo 'Changes to files in .github are not allowed.'
+          exit 1
+      - name: Look for changes to license_policy.yml
+        if: contains(steps.files.outputs.all, 'license_policy.yml')
+        run: |
+          echo 'Changes to license_policy.yml are not allowed.'
+          exit 1
+      - name: Look for changes to repolinter.json
+        if: contains(steps.files.outputs.all, 'repolinter.json')
+        run: |
+          echo 'Changes to repolinter.json are not allowed.'
           exit 1
