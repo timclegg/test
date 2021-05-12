@@ -36,6 +36,7 @@ jobs:
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /github/workspace/license_policy.yml --only-findings --summary --json-pp /github/workspace/licenses.json /github/workspace
         run: |
+          echo "v0.9"
           scancode -l --ignore licenses.json --ignore __w/test/test/.github/**/* --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
           echo "\n\nHere is the licenses.json found:\n"
           echo $(cat licenses.json)
