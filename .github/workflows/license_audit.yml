@@ -51,7 +51,7 @@ jobs:
         with:
           licenses_file: '/github/workspace/licenses.json'
       - name: Analysis results (good)
-        if: steps.analysis.outputs.unapproved_licenses == false
+        if: ${{ steps.analysis.outputs.unapproved_licenses }} == false
         uses: mshick/add-pr-comment@v1
         with:
           message: |
@@ -59,7 +59,7 @@ jobs:
             Congraulations!  All licenses appear to be approved for use.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Analysis results (bad)
-        if: steps.analysis.outputs.unapproved_licenses == true
+        if: ${{ steps.analysis.outputs.unapproved_licenses }} == true
         uses: mshick/add-pr-comment@v1
         with:
           message: |
