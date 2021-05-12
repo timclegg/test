@@ -11,6 +11,10 @@ outputs:
     description: '(bool) Whether or not unapproved licenses were found.'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  # image: 'Dockerfile'
+  image: ghcr.io/oracledevrel/license_audit:latest
+    credentials:
+      username: ${{ github.actor }}
+      password: ${{ secrets.GHCR_PAT }}
   args:
     - ${{ inputs.license_file }}
