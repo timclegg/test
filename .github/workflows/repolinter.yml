@@ -15,14 +15,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       
-      - name: 'Check against Repolinter'
-        id: repolinter1
-        uses: newrelic/repolinter-action@v1
-        with:
-          config_file: 'repolinter.json'
-          output_type: issue
-          username: ${{ github.actor }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Check against Repolinter'
+      #   id: repolinter1
+      #   uses: newrelic/repolinter-action@v1
+      #   with:
+      #     config_file: 'repolinter.json'
+      #     output_type: issue
+      #     username: ${{ github.actor }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: 'Check against Repolinter'
         id: repolinter2
