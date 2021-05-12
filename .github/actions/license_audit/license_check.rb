@@ -1,3 +1,5 @@
+# Copyright (c) 2021 Oracle and/or its affiliates."
+
 require 'json'
 
 file_name = 'licenses.json'

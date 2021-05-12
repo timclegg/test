@@ -1,28 +1,60 @@
 name: Banned file changes (PR)
 on:
-  pull_request:
-    branches: [ "**/*" ]
+  # pull_request:
+  #   branches: [ "**/*" ]
+  pull_request_target:
   
 jobs:
   check_for_banned_file_changes:
     name: Look for unsupported (banned) file modifications on PRs
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout repo'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Get all file changes
         id: files
         uses: jitterbit/get-changed-files@v1
-      - name: Look for changes in .github
+      - name: Look for changes to .github
         if: contains(steps.files.outputs.all, '.github')
         run: |
           echo 'Changes to files in .github are not allowed.'
           exit 1
+      - name: Comment if .github changed
+        if: contains(steps.files.outputs.all, '.github')
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Banned Files Modified**
+            Changes to files in `.github` are not permitted.  Please remove these changes and re-commit your code.
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Look for changes to license_policy.yml
         if: contains(steps.files.outputs.all, 'license_policy.yml')
         run: |
           echo 'Changes to license_policy.yml are not allowed.'
-          exit 1
+      - name: Comment if license_policy.yml changed
+        if: contains(steps.files.outputs.all, 'license_policy.yml')
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Banned Files Modified**
+            Changes to `license_policy.yml` are not permitted.  Please remove these changes and re-commit your code.
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Look for changes to repolinter.json
+        if: contains(steps.files.outputs.all, 'repolinter.json')
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Banned Files Modified**
+            Changes to `repolinter.json` are not permitted.  Please remove these changes and re-commit your code.
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment if repolinter.json changed
         if: contains(steps.files.outputs.all, 'repolinter.json')
         run: |
           echo 'Changes to repolinter.json are not allowed.'
+      - name: Fail on banned file changes
+        if: contains(steps.files.outputs.all, '.github') || contains(steps.files.outputs.all, 'license_policy.yml') || contains(steps.files.outputs.all, 'repolinter.json')
+        run: |
           exit 1
