@@ -32,8 +32,9 @@ jobs:
         #   run: |
         #     scancode -clpeui --ignore licenses.json --json-pp /github/workspace/licenses.json /github/workspace/
         # run: scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project/
+        # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         run: |
-          scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
+          scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /github/workspace/license_policy.yml --only-findings --summary --json-pp /github/workspace/licenses.json /github/workspace
           echo "\n\nHere are the licenses found:\n"
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
