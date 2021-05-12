@@ -56,6 +56,7 @@ jobs:
           message: |
             **License Inspection**
             Status update: still working!
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Analysis results (good)
         if: steps.analysis.outputs.unapproved_licenses == false
         # run: echo "${{ steps.analysis.outputs.unapproved_licenses}}"
