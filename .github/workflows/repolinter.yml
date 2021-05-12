@@ -1,7 +1,8 @@
 name: Repolinter
 on:
-  pull_request:
-    branches: [ "**/*" ]
+  # pull_request:
+  #   branches: [ "**/*" ]
+  pull_request_target:
   
 jobs:
   run_repolinter:
@@ -10,6 +11,9 @@ jobs:
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       
       - name: 'Check against Repolinter'
         id: repolinter1
@@ -17,8 +21,8 @@ jobs:
         with:
           config_file: 'repolinter.json'
           output_type: issue
-          # username: my-token-username
-          # token: ${{ secrets.MY_TOKEN }}
+          username: ${{ github.actor }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: 'Check against Repolinter'
         id: repolinter2
