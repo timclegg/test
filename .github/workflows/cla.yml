@@ -18,7 +18,7 @@ jobs:
           # the below token should have repo scope and must be manually added by you in the repository's secret
           PERSONAL_ACCESS_TOKEN : ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          path-to-signatures: 'signatures/oca-20210504/test.json'
+          path-to-signatures: 'signatures/oca-20210504/${{ github.repository }}'
           path-to-document: 'https://github.com/oracledevrel/devrel-oca-mgmt/blob/main/oca-20210504.md' # e.g. a CLA or a DCO document
           # branch should not be protected
           branch: 'main'
