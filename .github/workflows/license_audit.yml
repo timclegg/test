@@ -9,11 +9,11 @@ jobs:
     name: Get inventory of licenses used in project
     runs-on: ubuntu-latest
     container:
-      image: txl8578/scancode-toolkit
-      # image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
-      # credentials:
-      #   username: ${{ github.actor }}
-      #   password: ${{ secrets.GITHUB_TOKEN }}
+      # image: txl8578/scancode-toolkit
+      image: ghcr.io/oracledevrel/scancode-toolkit:v21.3.31
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
       # volumes:
         # - ${{ $GITHUB_WORKSPACE }}:/github/workspace
         # - /__w/test/test:/project
@@ -40,8 +40,8 @@ jobs:
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /github/workspace/license_policy.yml --only-findings --summary --json-pp /github/workspace/licenses.json /github/workspace
         # scancode -l --ignore licenses.json --ignore .github/**/* --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
+        # cd /__w/test/test/
         run: |
-          cd /__w/test/test/
           scancode -l --ignore licenses.json --ignore .github/**/* --ignore license_policy.yml --license-policy license_policy.yml --only-findings --summary --json-pp licenses.json .
           echo "\n\nHere is the licenses.json:\n"
           echo $(cat licenses.json)
@@ -52,15 +52,15 @@ jobs:
           licenses_file: '/github/workspace/licenses.json'
       - name: Analysis results
         run: echo "${{ steps.analysis.outputs.unapproved_licenses }}"
-      - name: Analysis results (good)
-        if: steps.analysis.outputs.unapproved_licenses == 'false'
-        uses: mshick/add-pr-comment@v1
-        with:
-          message: |
-            **License Inspection**
-            Congraulations!  All licenses appear to be approved for use.
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Analysis results (bad)
+      # - name: Analysis results (good)
+      #   if: steps.analysis.outputs.unapproved_licenses == 'false'
+      #   uses: mshick/add-pr-comment@v1
+      #   with:
+      #     message: |
+      #       **License Inspection**
+      #       Congraulations!  All licenses appear to be approved for use.
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment if analysis finds unapproved licenses
         if: steps.analysis.outputs.unapproved_licenses == 'true'
         uses: mshick/add-pr-comment@v1
         with:
