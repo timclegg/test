@@ -35,9 +35,13 @@ jobs:
         # run: scancode -clpeui --ignore licenses.json --json-pp /project/licenses.json /project/
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         # scancode -l --ignore licenses.json --ignore ".github/**/*" --ignore "license_policy.yml" --license-policy /github/workspace/license_policy.yml --only-findings --summary --json-pp /github/workspace/licenses.json /github/workspace
+        # scancode -l --ignore licenses.json --ignore .github/**/* --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
         run: |
           echo "v0.9"
-          scancode -l --ignore licenses.json --ignore __w/test/test/.github/**/* --ignore "license_policy.yml" --license-policy /__w/test/test/license_policy.yml --only-findings --summary --json-pp /__w/test/test/licenses.json /__w/test/test/
+          echo "$(pwd)"
+          echo "$(ls -lah)"
+          cd /__w/test/test/
+          scancode -l --ignore licenses.json --ignore .github/**/* --ignore license_policy.yml --license-policy license_policy.yml --only-findings --summary --json-pp licenses.json .
           echo "\n\nHere is the licenses.json found:\n"
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
