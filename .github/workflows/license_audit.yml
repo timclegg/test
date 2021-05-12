@@ -50,8 +50,10 @@ jobs:
         id: analysis
         with:
           licenses_file: '/github/workspace/licenses.json'
+      - name: Analysis results
+        run: echo "${{ steps.analysis.outputs.unapproved_licenses }}"
       - name: Analysis results (good)
-        if: steps.analysis.outputs.unapproved_licenses == "false"
+        if: steps.analysis.outputs.unapproved_licenses == false
         uses: mshick/add-pr-comment@v1
         with:
           message: |
@@ -59,7 +61,7 @@ jobs:
             Congraulations!  All licenses appear to be approved for use.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Analysis results (bad)
-        if: steps.analysis.outputs.unapproved_licenses == "true"
+        if: steps.analysis.outputs.unapproved_licenses == true
         uses: mshick/add-pr-comment@v1
         with:
           message: |
@@ -67,5 +69,5 @@ jobs:
             Requires manual inspection.  There are some licenses which dictate further analysis and review.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Halt pipeline on unapproved licenses
-        if: steps.analysis.outputs.unapproved_licenses == "true"
+        if: steps.analysis.outputs.unapproved_licenses == true
         run: exit 1
