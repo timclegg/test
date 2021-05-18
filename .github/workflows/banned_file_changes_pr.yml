@@ -18,13 +18,10 @@ jobs:
       - name: Get file changes
         uses: ./.github/actions/git_files_changed
         id: files
-        # with:
-        #   number_commits_back: '1'
       - name: Look for changes to .github
         if: contains(steps.files.outputs.all_files_changed, '.github')
         run: |
           echo 'Changes to files in .github are not allowed.'
-          exit 1
       - name: Comment if .github changed
         if: contains(steps.files.outputs.all_files_changed, '.github')
         uses: mshick/add-pr-comment@v1
