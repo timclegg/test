@@ -1,37 +1,86 @@
 name: Repolinter
 on:
-  # pull_request:
-  #   branches: [ "**/*" ]
   pull_request_target:
   
 jobs:
   run_repolinter:
     name: Run Repolinter on pull request
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/oracledevrel/repolinter:v0.11.1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_PAT }}
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      
-      # - name: 'Check against Repolinter'
-      #   id: repolinter1
-      #   uses: newrelic/repolinter-action@v1
-      #   with:
-      #     config_file: 'repolinter.json'
-      #     output_type: issue
-      #     username: ${{ github.actor }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: 'Check against Repolinter'
-        id: repolinter2
-        uses: newrelic/repolinter-action@v1
+      - name: Run Repolinter
+        run: |
+          repolinter lint --format json --rulesetFile repolinter.json . > repolinter_results.json
+          echo "\n\nHere is the repolinter_results.json:\n"
+          echo $(cat repolinter_results.json)
+      - name: Analyze the Repolinter results
+        uses: ./.github/actions/repolinter_audit
+        id: analysis
         with:
-          config_file: 'repolinter.json'
-      
-      # - name: 'Output'
-      #   run: |
-      #     echo "${{ steps.repolinter.outputs.passed }}"
-      #     echo "${{ steps.repolinter.outputs.errored }}"
-      #     echo "${{ steps.repolinter.outputs.json_output }}"
+          json_results_file: '/github/workspace/repolinter_results.json'
+      - name: Overall analysis results
+        run: |
+          echo "Passed: ${{ steps.analysis.outputs.passed }}"
+          echo "Errored: ${{ steps.analysis.outputs.errored }}"
+      - name: Comment if analysis finds missing readme
+        if: steps.analysis.outputs.readme_file_found == 'false'
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Missing README**
+            The README file seems to be missing.  Please add it.
+            
+            Details:
+            ${{ steps.analysis.outputs.readme_file_details }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment if analysis finds missing license
+        if: steps.analysis.outputs.license_file_found == 'false'
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Missing LICENSE**
+            The LICENSE file seems to be missing.  Please add it.
+            
+            Details:
+            ${{ steps.analysis.outputs.license_file_details }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment if analysis finds blacklisted words
+        if: steps.analysis.outputs.blacklisted_words_found == 'true'
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Blacklisted Words Found**
+            There are some words that we forbid usage of.  It looks like at least one of these was found.  Please remove.
+            
+            Details:
+            ${{ steps.analysis.outputs.blacklisted_words_details }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment if analysis finds copyright notice missing
+        if: steps.analysis.outputs.copyright_found == 'false'
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Missing Copyright Notice(s)**
+            It's a good idea to have copyright notices at the top of each file.  It looks like at least one file was missing this (though it might be further down in the file - this might be a false-positive).
+            
+            Details:
+            ${{ steps.analysis.outputs.copyright_details }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Halt pipeline if README is missing
+        if: steps.analysis.outputs.readme_file_found == 'false'
+        run: exit 1
+      - name: Halt pipeline if LICENSE is missing
+        if: steps.analysis.outputs.license_file_found == 'false'
+        run: exit 1
+      - name: Halt pipeline if blacklisted word(s) found
+        if: steps.analysis.outputs.blacklisted_words_found == 'true'
+        run: exit 1
