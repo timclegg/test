@@ -8,8 +8,8 @@ if ARGV.length > 0
   file_name = ARGV[0]
 end
 
-if ENV.include?('JSON_RESULTS_FILE') && ENV['JSON_RESULTS_FILE'].to_s.length > 0
-  file_name = ENV['JSON_RESULTS_FILE']
+if ENV.include?('INPUT_JSON_RESULTS_FILE') && ENV['INPUT_JSON_RESULTS_FILE'].to_s.length > 0
+  file_name = ENV['INPUT_JSON_RESULTS_FILE']
 end
 
 if !File.exist?(file_name)

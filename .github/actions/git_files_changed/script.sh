@@ -1,4 +1,7 @@
+#!/usr/bin/env bash
+#
 # Copyright (c) 2021 Oracle and/or its affiliates.
+#
 
 echo "Looking back at the previous ${INPUT_NUMBER_COMMITS_BACK} commits"
 echo "::set-output name=all_files_changed::`git diff --name-only HEAD~$INPUT_NUMBER_COMMITS_BACK..HEAD`"
