@@ -1,0 +1,26 @@
+# action.yml
+name: 'Git Files Changed'
+description: 'Look at the files changed in git commits.'
+inputs:
+  number_commits_back:
+    description: 'How many git commits to look back at.'
+    required: false
+    default: '1'
+outputs:
+  all_files_changed:
+    description: 'All of the changed files.'
+  added_files:
+    description: 'Only files added.'
+  copied_files:
+    description: 'Only files copied.'
+  deleted_files:
+    description: 'Only files deleted.'
+  modified_files:
+    description: 'Only files modified.'
+  renamed_files:
+    description: 'Only files renamed.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.number_commits_back }}
