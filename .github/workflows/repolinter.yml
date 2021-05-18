@@ -19,7 +19,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Run Repolinter
         run: |
-          bundle exec repolinter.js lint --format json --rulesetFile repolinter.json . > repolinter_results.json
+          bundle exec /app/bin/repolinter.js lint --format json --rulesetFile repolinter.json . > repolinter_results.json
           echo "\n\nHere is the repolinter_results.json:\n"
           echo $(cat repolinter_results.json)
       - name: Analyze the Repolinter results
