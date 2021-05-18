@@ -81,7 +81,7 @@ json_data['results'].each do |f|
     end
     puts "::set-output name=license_file_details::#{msg}"
   elsif f['ruleInfo']['name'] == 'blacklist-words-not-found'
-    puts "::set-output name=blacklisted_words_found::#{f['status'] == 'PASSED' ? 'true' : 'false'}"
+    puts "::set-output name=blacklisted_words_found::#{f['status'] == 'PASSED' ? 'false' : 'true'}"
     
     msg = ""
     f['lintResult']['targets'].each do |t|
