@@ -43,19 +43,19 @@ json_data = JSON.parse(file_data)
 
 unapproved_licenses = {}
 
-def markdown_message(result = "PASSED", message = "")
-  ret = ""
+def markdown_message(result = 'PASSED', message = '')
+  ret = ''
   
-  if result == "PASSED"
+  if result == 'PASSED'
     ret = ":white_check_mark: - #{message}"
-  elsif result == "NOT_PASSED_WARN"
+  elsif result == 'NOT_PASSED_WARN'
     ret = ":warning: - #{message}"
-  elsif result == "NOT_PASSED_ERROR"
+  elsif result == 'NOT_PASSED_ERROR'
     ret = ":x: - #{message}"
   end
   
   return ret
-}
+end
 
 puts "::set-output name=passed::#{json_data['passed']}"
 puts "::set-output name=errored::#{json_data['errored']}"
@@ -63,39 +63,39 @@ puts "::set-output name=errored::#{json_data['errored']}"
 
 json_data['results'].each do |f|
   if f['ruleInfo']['name'] == 'readme-file-exists'
-    puts "::set-output name=readme_file_found::#{f['status'] == 'PASSED' ? "true" : "false"}"
+    puts "::set-output name=readme_file_found::#{f['status'] == 'PASSED' ? 'true' : 'false'}"
     
     msg = ""
-    for f['lintResult']['targets'].each do |t|
+    f['lintResult']['targets'].each do |t|
       msg += "\n" if msg.length > 0
-      msg += markdown_message("#{t['passed'] == true ? "PASSED" : "NOT_PASSED_ERROR"}", "#{t['path']}: #{t['message']}")
+      msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=readme_file_details::#{msg}"
   elsif f['ruleInfo']['name'] == 'license-file-exists'
-    puts "::set-output name=license_file_found::#{f['status'] == 'PASSED' ? "true" : "false"}"
+    puts "::set-output name=license_file_found::#{f['status'] == 'PASSED' ? 'true' : 'false'}"
     
     msg = ""
-    for f['lintResult']['targets'].each do |t|
+    f['lintResult']['targets'].each do |t|
       msg += "\n" if msg.length > 0
-      msg += markdown_message("#{t['passed'] == true ? "PASSED" : "NOT_PASSED_ERROR"}", "#{t['path']}: #{t['message']}")
+      msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=license_file_details::#{msg}"
   elsif f['ruleInfo']['name'] == 'blacklist-words-not-found'
-    puts "::set-output name=blacklisted_words_found::#{f['status'] == 'PASSED' ? "true" : "false"}"
+    puts "::set-output name=blacklisted_words_found::#{f['status'] == 'PASSED' ? 'true' : 'false'}"
     
     msg = ""
-    for f['lintResult']['targets'].each do |t|
+    f['lintResult']['targets'].each do |t|
       msg += "\n" if msg.length > 0
-      msg += markdown_message("#{t['passed'] == true ? "PASSED" : "NOT_PASSED_ERROR"}", "#{t['path']}: #{t['message']}")
+      msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=blacklisted_words_details::#{msg}"
   elsif f['ruleInfo']['name'] == 'copyright-notice-present'
-    puts "::set-output name=copyright_found::#{f['status'] == 'PASSED' ? "true" : "false"}"
+    puts "::set-output name=copyright_found::#{f['status'] == 'PASSED' ? 'true' : 'false'}"
     
     msg = ""
-    for f['lintResult']['targets'].each do |t|
+    f['lintResult']['targets'].each do |t|
       msg += "\n" if msg.length > 0
-      msg += markdown_message("#{t['passed'] == true ? "PASSED" : "NOT_PASSED_ERROR"}", "#{t['path']}: #{t['message']}")
+      msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=copyright_details::#{msg}"
   end
