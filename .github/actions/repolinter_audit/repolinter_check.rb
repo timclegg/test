@@ -52,6 +52,8 @@ def markdown_message(result = 'PASSED', message = '')
     ret = ":warning: - #{message}"
   elsif result == 'NOT_PASSED_ERROR'
     ret = ":x: - #{message}"
+  else
+    ret = message
   end
   
   return ret
@@ -67,7 +69,7 @@ json_data['results'].each do |f|
     
     msg = ""
     f['lintResult']['targets'].each do |t|
-      msg += "\n" if msg.length > 0
+      msg += "<br />" if msg.length > 0
       msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=readme_file_details::#{msg}"
@@ -76,7 +78,7 @@ json_data['results'].each do |f|
     
     msg = ""
     f['lintResult']['targets'].each do |t|
-      msg += "\n" if msg.length > 0
+      msg += "<br />" if msg.length > 0
       msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=license_file_details::#{msg}"
@@ -85,7 +87,7 @@ json_data['results'].each do |f|
     
     msg = ""
     f['lintResult']['targets'].each do |t|
-      msg += "\n" if msg.length > 0
+      msg += "<br />" if msg.length > 0
       msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=blacklisted_words_details::#{msg}"
@@ -94,8 +96,8 @@ json_data['results'].each do |f|
     
     msg = ""
     f['lintResult']['targets'].each do |t|
-      msg += "\n" if msg.length > 0
-      msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_ERROR'}", "#{t['path']}: #{t['message']}")
+      msg += "<br />" if msg.length > 0
+      msg += markdown_message("#{t['passed'] == true ? 'PASSED' : 'NOT_PASSED_WARN'}", "#{t['path']}: #{t['message']}")
     end
     puts "::set-output name=copyright_details::#{msg}"
   end
