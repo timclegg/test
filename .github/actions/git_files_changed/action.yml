@@ -1,3 +1,5 @@
+# Copyright (c) 2021 Oracle and/or its affiliates.
+
 # action.yml
 name: 'Git Files Changed'
 description: 'Look at the files changed in git commits.'
@@ -6,6 +8,10 @@ inputs:
     description: 'How many git commits to look back at.'
     required: false
     default: '1'
+  detect_num_commits_back:
+    description: 'Whether or not it should auto-detect the number of commits to look back at.'
+    required: false
+    default: true
 outputs:
   all_files_changed:
     description: 'All of the changed files.'
@@ -24,3 +30,4 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.number_commits_back }}
+    - ${{ inputs.detect_num_commits_back }}

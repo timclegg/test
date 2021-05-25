@@ -1,3 +1,5 @@
+# Copyright (c) 2021 Oracle and/or its affiliates.
+
 # action.yml
 name: 'Repolinter checker'
 description: 'Examine the JSON output from Repolinter and make it accessible as an Action.'

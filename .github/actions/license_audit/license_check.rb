@@ -46,14 +46,10 @@ json_data['files'].each do |f|
   end
 end
 
-# puts "Final output:"
-
 if unapproved_licenses.count > 0
   puts "ERROR - found some licenses that require further inspection:\n#{unapproved_licenses}"
   puts "::set-output name=unapproved_licenses::true"
-  # exit(1)
 else
   puts "All licenses found were approved for use."
   puts "::set-output name=unapproved_licenses::false"
-  # exit(0)
 end
