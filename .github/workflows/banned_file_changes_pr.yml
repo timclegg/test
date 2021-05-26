@@ -9,15 +9,22 @@ jobs:
     name: Look for unsupported (banned) file modifications on PRs
     runs-on: ubuntu-latest
     steps:
+      - name: 'Get number of git commits'
+        uses: ./.github/actions/git_num_commits
+        id: num_commits
+        with:
+          url: ${{ github.event.pull_request.url }}
       - name: 'Checkout repo'
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          fetch-depth: '1'
+          fetch-depth: ${{ steps.num_commits.outputs.num_commits + 1 }}
       - name: Get file changes
         uses: ./.github/actions/git_files_changed
         id: files
+        with:
+          number_commits_back: ${{ steps.num_commits.outputs.num_commits }}
       - name: Look for changes to .github
         if: contains(steps.files.outputs.all_files_changed, '.github')
         run: |

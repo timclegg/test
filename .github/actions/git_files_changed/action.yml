@@ -8,10 +8,6 @@ inputs:
     description: 'How many git commits to look back at.'
     required: false
     default: '1'
-  detect_num_commits_back:
-    description: 'Whether or not it should auto-detect the number of commits to look back at.'
-    required: false
-    default: true
 outputs:
   all_files_changed:
     description: 'All of the changed files.'
@@ -30,4 +26,3 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.number_commits_back }}
-    - ${{ inputs.detect_num_commits_back }}
