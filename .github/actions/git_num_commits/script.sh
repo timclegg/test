@@ -11,3 +11,4 @@ NUM_COMMITS=`curl -s \
 echo "There are ${NUM_COMMITS} commits."
 
 echo "::set-output name=num_commits::${NUM_COMMITS}"
+echo "::set-output name=fetch_depth::${NUM_COMMITS+1}"

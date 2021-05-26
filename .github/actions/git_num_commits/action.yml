@@ -10,6 +10,8 @@ inputs:
 outputs:
   num_commits:
     description: 'The number of commits.'
+  fetch_depth:
+    description: 'The depth to use for the fetch (num_commits+1).'
 runs:
   using: 'docker'
   image: 'Dockerfile'
