@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Get number of git commits'
-        uses: ./.github/actions/git_num_commits
+        uses: https://github.com/oracledevrel/action-git-num-commits
         id: num_commits
         with:
           url: ${{ github.event.pull_request.url }}
