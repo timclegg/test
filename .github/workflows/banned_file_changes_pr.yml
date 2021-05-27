@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Get number of git commits'
-        uses: oracle-devrel/action-git-num-commits@v0.1-alpha5
+        uses: oracle-devrel/action-git-num-commits@v0.1-alpha6
         id: num_commits
         with:
-          url: ${{ github.event.pull_request.url }}
+          pull_url: ${{ github.event.pull_request.url }}
       - name: 'Checkout repo'
         uses: actions/checkout@v2
         with:
