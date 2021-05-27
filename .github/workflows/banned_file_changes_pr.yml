@@ -34,8 +34,8 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Banned Files Modified**
-            Changes to files in `.github` are not permitted.  Please remove these changes and re-commit your code.
+            :no_entry: **Banned Files Modified**
+            Changes to files in `.github` are not permitted.  Please revert your changes and re-submit a new PR.  Simply changing the file back to its original state and re-committing won't work (you must revert the changes made to it).
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Look for changes to license_policy.yml
         if: contains(steps.files.outputs.all_files_changed, '"license_policy.yml"')
@@ -46,16 +46,16 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Banned Files Modified**
-            Changes to `license_policy.yml` are not permitted.  Please remove these changes and re-commit your code.
+            :no_entry: **Banned Files Modified**
+            Changes to `license_policy.yml` are not permitted.  Please revert your changes and re-submit a new PR.  Simply changing the file back to its original state and re-committing won't work (you must revert the changes made to it).
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Look for changes to repolinter.json
         if: contains(steps.files.outputs.all_files_changed, '"repolinter.json"')
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Banned Files Modified**
-            Changes to `repolinter.json` are not permitted.  Please remove these changes and re-commit your code.
+            :no_entry: **Banned Files Modified**
+            Changes to `repolinter.json` are not permitted.  Please revert your changes and re-submit a new PR.  Simply changing the file back to its original state and re-committing won't work (you must revert the changes made to it).
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Comment if repolinter.json changed
         if: contains(steps.files.outputs.all_files_changed, '"repolinter.json"')

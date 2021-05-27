@@ -25,7 +25,7 @@ jobs:
           echo $(cat repolinter_results.json)
           exit 0
       - name: Analyze the Repolinter results
-        uses: ./.github/actions/repolinter_audit
+        uses: oracle-devrel/actions-repolinter-audit@v0.1-alpha1
         id: analysis
         with:
           json_results_file: '/github/workspace/repolinter_results.json'
@@ -38,7 +38,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Missing README**
+            :no_entry: **FAILURE: Missing README**
             The README file seems to be missing.  Please add it.
             
             Details:
@@ -49,7 +49,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Missing LICENSE**
+            :no_entry: **FAILURE: Missing LICENSE**
             The LICENSE file seems to be missing.  Please add it.
             
             Details:
@@ -60,7 +60,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Blacklisted Words Found**
+            :no_entry: **FAILURE: Blacklisted Words Found**
             There are some words that we forbid usage of.  It looks like at least one of these was found.  Please remove.
             
             Details:
@@ -71,7 +71,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **Missing Copyright Notice(s)**
+            :warning: **WARNING: Missing Copyright Notice(s)**
             It's a good idea to have copyright notices at the top of each file.  It looks like at least one file was missing this (though it might be further down in the file - this might be a false-positive).
             
             Details:

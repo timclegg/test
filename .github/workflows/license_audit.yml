@@ -23,7 +23,7 @@ jobs:
           echo "\n\nHere is the licenses.json:\n"
           echo $(cat licenses.json)
       - name: Look for non-approved licenses
-        uses: ./.github/actions/license_audit
+        uses: oracle-devrel/actions-license-audit@v0.1-alpha2
         id: analysis
         with:
           licenses_file: '/github/workspace/licenses.json'
@@ -34,7 +34,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            **License Inspection**
+            :no_entry: **License Inspection**
             Requires manual inspection.  There are some licenses which dictate further analysis and review.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Halt pipeline on unapproved licenses

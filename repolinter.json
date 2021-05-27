@@ -27,7 +27,7 @@
         "type": "file-not-contents",
         "options": {
           "globsAll": ["**/!(repolinter.json|.github)"],
-          "content": "(blacklisted_words_here|test)",
+          "content": "()",
           "flags": "i",
           "nocase": true
         }
@@ -41,7 +41,7 @@
           "globsAll": ["**/*"],
           "skip-binary-files": false,
           "skip-paths-matching": {
-            "extensions": ["json","md"],
+            "extensions": ["yaml","yml","md","json"],
             "patterns": [".github"],
             "flags": ""
           },

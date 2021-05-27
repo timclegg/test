@@ -1,12 +1,4 @@
 license_policies:
-- license_key: mit
-  label: Approved license
-  color_code: '#00800'
-  icon: icon-ok-circle
-- license_key: gpl
-  label: Approved License
-  color_code: '#00800'
-  icon: icon-ok-circle
 - license_key: upl-1.0
   label: Approved License
   color_code: '#00800'
