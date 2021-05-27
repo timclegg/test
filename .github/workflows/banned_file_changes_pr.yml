@@ -21,7 +21,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: ${{ steps.num_commits.outputs.fetch_depth }}
       - name: Get file changes
-        uses: oracle-devrel/action-git-files-changed@v0.1-alpha1
+        uses: oracle-devrel/action-git-files-changed@v0.1-alpha2
         id: files
         with:
           pull_url: ${{ github.event.pull_request.url }}
