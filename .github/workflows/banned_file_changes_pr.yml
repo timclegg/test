@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Get number of git commits'
-        uses: oracledevrel/action-git-num-commits@v0.1-alpha5
+        uses: oracle-devrel/action-git-num-commits@v0.1-alpha5
         id: num_commits
         with:
           url: ${{ github.event.pull_request.url }}
@@ -21,10 +21,10 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           fetch-depth: ${{ steps.num_commits.outputs.fetch_depth }}
       - name: Get file changes
-        uses: ./.github/actions/git_files_changed
+        uses: oracle-devrel/action-git-files-changed@v0.1-alpha1
         id: files
         with:
-          number_commits_back: ${{ steps.num_commits.outputs.num_commits }}
+          pull_url: ${{ github.event.pull_request.url }}
       - name: Look for changes to .github
         if: contains(steps.files.outputs.all_files_changed, '.github')
         run: |
@@ -38,11 +38,11 @@ jobs:
             Changes to files in `.github` are not permitted.  Please remove these changes and re-commit your code.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Look for changes to license_policy.yml
-        if: contains(steps.files.outputs.all_files_changed, 'license_policy.yml')
+        if: contains(steps.files.outputs.all_files_changed, '"license_policy.yml"')
         run: |
           echo 'Changes to license_policy.yml are not allowed.'
       - name: Comment if license_policy.yml changed
-        if: contains(steps.files.outputs.all_files_changed, 'license_policy.yml')
+        if: contains(steps.files.outputs.all_files_changed, '"license_policy.yml"')
         uses: mshick/add-pr-comment@v1
         with:
           message: |
@@ -50,7 +50,7 @@ jobs:
             Changes to `license_policy.yml` are not permitted.  Please remove these changes and re-commit your code.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Look for changes to repolinter.json
-        if: contains(steps.files.outputs.all_files_changed, 'repolinter.json')
+        if: contains(steps.files.outputs.all_files_changed, '"repolinter.json"')
         uses: mshick/add-pr-comment@v1
         with:
           message: |
@@ -58,10 +58,10 @@ jobs:
             Changes to `repolinter.json` are not permitted.  Please remove these changes and re-commit your code.
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Comment if repolinter.json changed
-        if: contains(steps.files.outputs.all_files_changed, 'repolinter.json')
+        if: contains(steps.files.outputs.all_files_changed, '"repolinter.json"')
         run: |
           echo 'Changes to repolinter.json are not allowed.'
       - name: Fail on banned file changes
-        if: contains(steps.files.outputs.all_files_changed, '.github') || contains(steps.files.outputs.all_files_changed, 'license_policy.yml') || contains(steps.files.outputs.all_files_changed, 'repolinter.json')
+        if: contains(steps.files.outputs.all_files_changed, '.github') || contains(steps.files.outputs.all_files_changed, '"license_policy.yml"') || contains(steps.files.outputs.all_files_changed, '"repolinter.json"')
         run: |
           exit 1
