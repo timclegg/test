@@ -27,7 +27,7 @@
         "type": "file-not-contents",
         "options": {
           "globsAll": ["**/!(repolinter.json|.github)"],
-          "content": "()",
+          "content": "",
           "flags": "i",
           "nocase": true
         }
