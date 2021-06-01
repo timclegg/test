@@ -42,7 +42,7 @@
           "skip-binary-files": false,
           "skip-paths-matching": {
             "extensions": ["yaml","yml","md","json"],
-            "patterns": [".github"],
+            "patterns": [".github", "sonar-project.properties"],
             "flags": ""
           },
           "lineCount": 1,
