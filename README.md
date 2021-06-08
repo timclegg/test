@@ -5,3 +5,5 @@
 This is a demo.  The readme is now a little less sparse.  A bit more text.
 
 I am adding some text
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
