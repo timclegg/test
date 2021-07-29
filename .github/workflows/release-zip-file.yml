@@ -1,0 +1,17 @@
+name: Release ZIP file packaging
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create_zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: papeloto/action-zip@v1
+      with:
+        files: terraform/*.tf terraform/schema.yml
+        recursive: false
+        dest: "${{ github.event.repository.name }}.zip"
+  
