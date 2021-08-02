@@ -16,4 +16,14 @@ jobs:
           files: terraform/*.tf terraform/schema.yml
           recursive: false
           dest: "${{ github.event.repository.name }}.zip"
-  
+      - name: 'Make ZIP file'
+        uses: oracle-devrel/action-release-zip-maker@v0.1
+        id: zip_maker
+      - name: 'Upload ZIP to release'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: test.zip
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "The latest ZIP file"
