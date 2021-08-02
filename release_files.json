@@ -1,0 +1,15 @@
+[
+  {
+    "action": "create_zip",
+    "file_name": "redbull-analytics-hol-latest.zip",
+    "on_failure": "file_issue",
+    "files": [
+      {
+        "src_pattern": "terraform/*"
+      },
+      {
+        "src": "LICENSE"
+      }
+    ]
+  }
+]
