@@ -2,7 +2,6 @@
   {
     "action": "create_zip",
     "file_name": "test_zip.zip",
-    "on_failure": "file_issue",
     "files": [
       {
         "src_pattern": "terraform/*"
@@ -11,5 +10,9 @@
         "src": "LICENSE"
       }
     ]
+  },
+  {
+    "action": "upload_file",
+    "file_name": "test_zip.zip",
   }
 ]
