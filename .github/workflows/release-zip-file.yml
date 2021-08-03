@@ -10,14 +10,17 @@ jobs:
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
-      - name: 'Make ZIP file'
-        uses: oracle-devrel/action-release-zip-maker@v0.2
+      - name: 'Make (and upload) ZIP file(s)'
+        uses: oracle-devrel/action-release-zip-maker@v0.4
         id: zip_maker
-      - name: 'Upload ZIP to release'
-        uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: test_zip.zip
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "The latest ZIP file"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Test vars'
+      #   run: |
+      #     echo $GH_REF
+      #     echo $GITHUB_REF
+      #     echo $GITHUB_REPOSITORY
+      #     echo $GITHUB_SERVER_URL
+      #   env:
+      #     GH_REF: ${{ github.ref }}
+          
