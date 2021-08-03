@@ -11,7 +11,7 @@ jobs:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
       - name: 'Make ZIP file'
-        uses: oracle-devrel/action-release-zip-maker@v0.1
+        uses: oracle-devrel/action-release-zip-maker@v0.2
         id: zip_maker
       - name: 'Upload ZIP to release'
         uses: svenstaro/upload-release-action@v2
