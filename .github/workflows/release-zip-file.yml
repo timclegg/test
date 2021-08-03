@@ -17,6 +17,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
       - name: 'Test vars'
-        run: echo $GH_REF
+        run: |
+          echo $GH_REF
+          echo $GITHUB_REF
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_SERVER_URL
         env:
           GH_REF: ${{ github.ref }}
+          
