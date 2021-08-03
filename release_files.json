@@ -13,6 +13,6 @@
   },
   {
     "action": "upload_file",
-    "file_name": "test_zip.zip",
+    "file_name": "test_zip.zip"
   }
 ]
