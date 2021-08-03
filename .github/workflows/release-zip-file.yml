@@ -10,10 +10,14 @@ jobs:
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v2
-      - name: 'Create ZIP file'
-        uses: papeloto/action-zip@v1
+      - name: 'Make ZIP file'
+        uses: oracle-devrel/action-release-zip-maker@v0.1
+        id: zip_maker
+      - name: 'Upload ZIP to release'
+        uses: svenstaro/upload-release-action@v2
         with:
-          files: terraform/*.tf terraform/schema.yml
-          recursive: false
-          dest: "${{ github.event.repository.name }}.zip"
-  
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: test_zip.zip
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "The latest ZIP file"
