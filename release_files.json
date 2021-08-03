@@ -1,7 +1,7 @@
 [
   {
     "action": "create_zip",
-    "file_name": "redbull-analytics-hol-latest.zip",
+    "file_name": "test_zip.zip",
     "on_failure": "file_issue",
     "files": [
       {
